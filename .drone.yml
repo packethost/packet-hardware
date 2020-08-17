@@ -1,0 +1,24 @@
+clone:
+  git:
+    image: quay.io/packet/drone-git
+
+matrix:
+  PYTHON_VERSION:
+    - 3.5
+    - 3.6
+    - 3.7
+    - 3.8
+
+pipeline:
+  fmt_and_lint:
+    image: python:3.8-alpine
+    commands:
+      - pip install black==19.3b0 pylama
+      - black --check --diff .
+      - pylama packethardware setup.py
+
+  test:
+    image: python:${PYTHON_VERSION}
+    commands:
+      - pip install tox
+      - tox -e py$(echo ${PYTHON_VERSION} | sed 's|\.||')
