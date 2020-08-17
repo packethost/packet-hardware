@@ -4,16 +4,16 @@ import click
 from lxml import etree
 import jsonpickle
 
-import utils
+from . import utils
 
-from component.component import Component  # noqa
-from component.motherboard import Motherboard  # noqa
-from component.processor import Processor  # noqa
-from component.memory import Memory  # noqa
-from component.network import Network  # noqa
-from component.disk_controller import DiskController  # noqa
-from component.disk import Disk  # noqa
-from component.management_controller import ManagementController  # noqa
+from .component.component import Component  # noqa
+from .component.motherboard import Motherboard  # noqa
+from .component.processor import Processor  # noqa
+from .component.memory import Memory  # noqa
+from .component.network import Network  # noqa
+from .component.disk_controller import DiskController  # noqa
+from .component.disk import Disk  # noqa
+from .component.management_controller import ManagementController  # noqa
 
 
 @click.command()
@@ -45,7 +45,7 @@ from component.management_controller import ManagementController  # noqa
     default="/tmp/components.jsonpickle",
     help="Path to local json component store",
 )
-def hardware(component_type, tinkerbell, verbose, dry, cache_file):
+def inventory(component_type, tinkerbell, verbose, dry, cache_file):
     lshw = etree.ElementTree(etree.fromstring(utils.lshw()))
     components = []
 
@@ -64,4 +64,4 @@ def hardware(component_type, tinkerbell, verbose, dry, cache_file):
 
 
 if __name__ == "__main__":
-    hardware(auto_envvar_prefix="HARDWARE")
+    inventory(auto_envvar_prefix="HARDWARE")

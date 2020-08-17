@@ -427,6 +427,27 @@ def normalize_vendor(vendor_string):
     return vendor_string
 
 
+def get_fru_info(prop, header="Builtin FRU Device"):
+    head_match = re.compile(
+        r"^FRU Device Description\s*:\s*(.*?)\s*(\(ID ([0-9]+)\))?\s*$"
+    )
+    prop_match = re.compile(r"^\s*(.*?)\s*:\s*(.*?)\s*$")
+    output = re.split(r"\r?\n", cmd_output("ipmitool", "fru"))
+    found_header = False
+    for line in output:
+        if found_header and not line.strip():
+            return ""
+        if not found_header:
+            head = head_match.search(line)
+            if head and head.group(1) == header:
+                found_header = True
+        else:
+            p = prop_match.search(line.strip())
+            if p and p.group(1) == prop:
+                return p.group(2)
+    return ""
+
+
 def get_mc_info(prop):
     regex = {
         "vendor": re.compile(r"^Manufacturer Name\s+:\s+(.*)$", re.MULTILINE),

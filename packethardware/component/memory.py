@@ -1,8 +1,7 @@
-import utils
-
+from .. import utils
 from lxml import etree
 
-from component.component import Component
+from .component import Component
 
 
 class Memory(Component):

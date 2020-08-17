@@ -1,5 +1,5 @@
-import utils
-from component.component import Component
+from .. import utils
+from .component import Component
 
 
 class ManagementController(Component):

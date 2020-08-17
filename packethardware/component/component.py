@@ -1,5 +1,5 @@
 import json
-import utils
+from .. import utils
 
 
 class Component(object):

@@ -1,8 +1,7 @@
-import utils
-
 from lxml import etree
 
-from component.component import Component
+from .. import utils
+from .component import Component
 
 
 class DiskController(Component):

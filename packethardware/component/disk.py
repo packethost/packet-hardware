@@ -1,7 +1,7 @@
-import utils
 import re
 
-from component.component import Component
+from .component import Component
+from .. import utils
 
 
 class Disk(Component):
