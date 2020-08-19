@@ -5,15 +5,7 @@ from lxml import etree
 import jsonpickle
 
 from . import utils
-
-from .component.component import Component  # noqa
-from .component.motherboard import Motherboard  # noqa
-from .component.processor import Processor  # noqa
-from .component.memory import Memory  # noqa
-from .component.network import Network  # noqa
-from .component.disk_controller import DiskController  # noqa
-from .component.disk import Disk  # noqa
-from .component.management_controller import ManagementController  # noqa
+from .component import *
 
 
 @click.command()
