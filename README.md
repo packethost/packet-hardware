@@ -10,10 +10,17 @@ or components that may be missing.
 
 - `python` version `3.5` or higher
 - `pip`
-- `lshw` version `B.02.18` or higher
+- `dmidecode`
+- `hdparm`
+- `ipmitool`
+- `lsblk`
+- `lshw`
+- `smartctl`
+
+Reference the Dockerfile for other dependency requirements.
 
 ## Installation
 
 ```shell
-pip3 install packet-hardware
+pip3 install git+https://github.com/packethost/packet-networking.git@master
 ```
