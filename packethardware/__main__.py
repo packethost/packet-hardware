@@ -1,3 +1,3 @@
-from packetnetworking.cli import cli
+from packethardware.cli import cli
 
 cli()
