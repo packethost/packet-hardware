@@ -29,12 +29,18 @@ pip3 install git+https://github.com/packethost/packet-hardware.git@master
 
 The below command will run the script without posting the results.
 ```shell
+# Build image
+docker build -t packet-hardware .
+
+# Run tool
 docker run --rm --privileged \
     -v /dev:/dev \
     -v /sys:/sys \
     -v /tmp:/tmp \
     packet-hardware inventory -u localhost --dry --cache-file /tmp/hardware.json
 ```
+
+Here I've specified a cache file so I may look at the json pickled results.
 
 ## Usage (inventory)
 
@@ -58,10 +64,10 @@ Options:
 Usage: packet-hardware update [OPTIONS]
 
 Options:
-  -t, --component-type TEXT  Component type(s) to update
+  -t, --component-type TEXT  Component type(s) to check
+  -u, --tinkerbell TEXT      Tinkerbell uri  [required]
   -v, --verbose              Turn on verbose messages for debugging
-  -d, --dry                  Don't actually update anything
+  -d, --dry                  Don't actually post anything to API
   -c, --cache-file TEXT      Path to local json component store
-  -f, --facility TEXT        Packet facility code
   --help                     Show this message and exit.
 ```
