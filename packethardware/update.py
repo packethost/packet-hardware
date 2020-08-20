@@ -10,10 +10,11 @@ from .component import *
 @click.option(
     "--component-type",
     "-t",
-    help="Component type(s) to update",
+    help="Component type(s) to check",
     multiple=True,
     default=[cls.__name__ for cls in vars()["Component"].__subclasses__()],
 )
+@click.option("--tinkerbell", "-u", help="Tinkerbell uri", required=True)
 @click.option(
     "--verbose",
     "-v",
@@ -22,7 +23,11 @@ from .component import *
     is_flag=True,
 )
 @click.option(
-    "--dry", "-d", default=False, help="Don't actually update anything", is_flag=True
+    "--dry",
+    "-d",
+    default=False,
+    help="Don't actually post anything to API",
+    is_flag=True,
 )
 @click.option(
     "--cache-file",
@@ -30,15 +35,15 @@ from .component import *
     default="/tmp/components.jsonpickle",
     help="Path to local json component store",
 )
-@click.option("--facility", "-f", default="lab1", help="Packet facility code")
-def update(component_type, verbose, dry, cache_file, facility):
+def update(component_type, tinkerbell, verbose, dry, cache_file):
+    component_types = [c + "Component" for c in component_type]
+
     with open(cache_file, "r") as pickle_file:
         components = jsonpickle.decode(pickle_file.read())
 
+    post_components = [c for c in components if c.component_type in component_types]
     if not dry:
-        for component in components:
-            if component.component_type in [t + "Component" for t in component_type]:
-                component.update()
+        Component.post_all(post_components, tinkerbell)
 
 
 if __name__ == "__main__":
