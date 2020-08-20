@@ -24,3 +24,44 @@ Reference the Dockerfile for other dependency requirements.
 ```shell
 pip3 install git+https://github.com/packethost/packet-networking.git@master
 ```
+
+## Running inventory (docker)
+
+The below command will run the script without posting the results.
+```shell
+docker run --rm --privileged \
+    -v /dev:/dev \
+    -v /sys:/sys \
+    -v /tmp:/tmp \
+    packet-hardware inventory -u localhost --dry --cache-file /tmp/hardware.json
+```
+
+## Usage (inventory)
+
+```shell
+# packet-hardware inventory --help
+Usage: packet-hardware inventory [OPTIONS]
+
+Options:
+  -t, --component-type TEXT  Component type(s) to check
+  -u, --tinkerbell TEXT      Tinkerbell uri  [required]
+  -v, --verbose              Turn on verbose messages for debugging
+  -d, --dry                  Don't actually post anything to API
+  -c, --cache-file TEXT      Path to local json component store
+  --help                     Show this message and exit.
+```
+
+## Usage (update)
+
+```shell
+# packet-hardware update --help
+Usage: packet-hardware update [OPTIONS]
+
+Options:
+  -t, --component-type TEXT  Component type(s) to update
+  -v, --verbose              Turn on verbose messages for debugging
+  -d, --dry                  Don't actually update anything
+  -c, --cache-file TEXT      Path to local json component store
+  -f, --facility TEXT        Packet facility code
+  --help                     Show this message and exit.
+```
