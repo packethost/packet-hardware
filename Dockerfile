@@ -2,8 +2,6 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
-ARG PACKET_HARDWARE_COMMIT=master
-
 ARG MSTFLINT_RELEASE=4.14.0-1
 ARG MSTFLINT_SHA512=965b25141d1b960bb575fc9fb089e912b0408af72919d23f295c6a8e8650c95c9459cb496171dca7f818252a180bd85bee8ed0f876159279013828478a0c2101
 ARG MSTFLINT_BASEURL=https://github.com/Mellanox/mstflint/releases/download/
@@ -48,10 +46,10 @@ COPY ./ /opt/packet-hardware/
 RUN apt update && \
     apt install -y git python3 python3-distutils && \
     curl https://bootstrap.pypa.io/get-pip.py | python3 && \
-    pip3 install --no-cache-dir -e /opt/packet-hardware && \
+    pip3 install --no-cache-dir /opt/packet-hardware && \
     apt clean -qy && \
-    rm -rf /var/lib/apt/lists/*
-#    pip3 install git+https://github.com/packethost/packet-networking.git@${PACKET_HARDWARE_COMMIT}
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /opt/packet-hardware
 
 # Install tools
 COPY binsrc/ /bin/src
