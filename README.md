@@ -22,7 +22,7 @@ Reference the Dockerfile for other dependency requirements.
 ## Installation
 
 ```shell
-pip3 install git+https://github.com/packethost/packet-networking.git@master
+pip3 install git+https://github.com/packethost/packet-hardware.git@master
 ```
 
 ## Running inventory (docker)
