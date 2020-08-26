@@ -463,3 +463,16 @@ def get_mc_info(prop):
     )
 
     return __re_multiline_first(mc_info, regex[prop]).strip()
+
+
+def get_baseboard_cpld(prop):
+    regex = {
+        "firmware_version": re.compile(r"^ CPLD Version\s+=\s+(.*)$", re.MULTILINE),
+    }
+
+    if prop not in regex:
+        return ""
+
+    cpld_version = cmd_output("/opt/dell/srvadmin/bin/idracadm7", "getversion", "-c")
+
+    return __re_multiline_first(cpld_version, regex[prop]).strip()
