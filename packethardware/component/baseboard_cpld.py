@@ -13,7 +13,11 @@ class BaseboardCPLD(Component):
         self.serial = utils.dmidecode_string("system-uuid")
 
         if self.vendor == "Dell Inc.":
-            self.firmware_version = utils.get_baseboard_cpld("firmware_version")
+            try:
+                self.firmware_version = utils.get_baseboard_cpld("firmware_version")
+            except:
+                print("Something went wrong, probably no racadm")
+                self.firmware_version = ""
         else:
             self.firmware_version = ""
 
