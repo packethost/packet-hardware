@@ -16,7 +16,7 @@ class BaseboardCPLD(Component):
             try:
                 self.firmware_version = utils.get_baseboard_cpld("firmware_version")
             except:
-                print("Something went wrong, probably no racadm")
+                utils.log(message="Something went wrong, probably no racadm.")
                 self.firmware_version = ""
         else:
             self.firmware_version = ""
