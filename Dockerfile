@@ -41,6 +41,14 @@ RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-
     apt clean -yq && \
     rm -rf /var/lib/apt/lists/*
 
+RUN  apt-get update && apt-get install gnupg -y && \
+    echo 'deb http://linux.dell.com/repo/community/ubuntu trusty openmanage' \
+    | tee /etc/apt/sources.list.d/linux.dell.com.sources.list && \
+    gpg --keyserver pool.sks-keyservers.net --recv-key 1285491434D8786F && \
+    gpg -a --export 1285491434D8786F | apt-key add - && \
+    apt-get update && \
+    apt-get -y install srvadmin-idracadm
+
 COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
