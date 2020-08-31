@@ -37,7 +37,7 @@ docker run --rm --privileged \
     -v /dev:/dev \
     -v /sys:/sys \
     -v /tmp:/tmp \
-    -net host
+    --network host \
     packet-hardware inventory -u localhost --dry --cache-file /tmp/hardware.json
 ```
 
