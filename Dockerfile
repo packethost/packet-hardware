@@ -63,6 +63,8 @@ RUN echo "Installing mlxup..." && \
         ln -nsf /opt/MegaRAID/perccli/perccli /usr/bin/ && \
     echo "Installing IPMICfg..." && \
         install -m 755 /bin/src/ipmicfg /usr/bin/ipmicfg && \
+    echo "Installing RACADM..." && \
+        dpkg -i /bin/src/*.deb && \
     rm -rf /bin/src
 
 ENTRYPOINT ["packet-hardware"]
