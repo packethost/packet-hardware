@@ -1,3 +1,4 @@
+from .baseboard_cpld import BaseboardCPLD
 from .component import Component
 from .chassis import Chassis
 from .disk import Disk
@@ -9,6 +10,7 @@ from .network import Network
 from .processor import Processor
 
 __all__ = [
+    "BaseboardCPLD",
     "Component",
     "Chassis",
     "Disk",

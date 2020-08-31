@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="packet-hardware",
-    version="1.0",
+    version="1.1",
     description="Tool used to discover hardware components and update packet's api",
     author="James W. Brinkerhoff",
     author_email="jwb@packet.com",

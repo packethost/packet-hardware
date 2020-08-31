@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
@@ -44,7 +44,7 @@ RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-
 COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
-    apt install -y git python3 python3-distutils && \
+    apt install -y git python3 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3 && \
     pip3 install --no-cache-dir /opt/packet-hardware && \
     apt clean -qy && \
@@ -61,6 +61,10 @@ RUN echo "Installing mlxup..." && \
     echo "Installing PercCli..." && \
         tar -zxvC / -f /bin/src/perccli-*.tar.gz && \
         ln -nsf /opt/MegaRAID/perccli/perccli /usr/bin/ && \
+    echo "Installing IPMICfg..." && \
+        install -m 755 /bin/src/ipmicfg /usr/bin/ipmicfg && \
+    echo "Installing RACADM..." && \
+        dpkg -i /bin/src/*.deb && \
     rm -rf /bin/src
 
 ENTRYPOINT ["packet-hardware"]
