@@ -465,7 +465,7 @@ def get_mc_info(prop):
     return __re_multiline_first(mc_info, regex[prop]).strip()
 
 
-def get_baseboard_cpld(prop):
+def get_dell_baseboard_cpld(prop):
     regex = {
         "firmware_version": re.compile(r"^ CPLD Version\s+=\s+(.*)$", re.MULTILINE),
     }
@@ -473,6 +473,19 @@ def get_baseboard_cpld(prop):
     if prop not in regex:
         return ""
 
-    cpld_version = cmd_output("/opt/dell/srvadmin/sbin/racadm-wrapper-idrac", "getversion", "-c")
+    cpld_version = cmd_output("racadm", "getversion", "-c")
+
+    return __re_multiline_first(cpld_version, regex[prop]).strip()
+
+
+def get_smc_baseboard_cpld(prop):
+    regex = {
+        "firmware_version": re.compile(r"^CPLD Version\s+:\s+(.*)$", re.MULTILINE),
+    }
+
+    if prop not in regex:
+        return ""
+
+    cpld_version = cmd_output("ipmicfg", "-summary")
 
     return __re_multiline_first(cpld_version, regex[prop]).strip()

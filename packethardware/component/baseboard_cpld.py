@@ -14,9 +14,15 @@ class BaseboardCPLD(Component):
 
         if self.vendor == "Dell Inc.":
             try:
-                self.firmware_version = utils.get_baseboard_cpld("firmware_version")
+                self.firmware_version = utils.get_dell_baseboard_cpld("firmware_version")
             except:
                 utils.log(message="Something went wrong, probably no racadm.")
+                self.firmware_version = ""
+        elif self.vendor == "Supermicro":
+            try:
+                self.firmware_version = utils.get_smc_baseboard_cpld("firmware_version")
+            except:
+                utils.log(message="Something went wrong, probably no ipmicfg.")
                 self.firmware_version = ""
         else:
             self.firmware_version = ""
