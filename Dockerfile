@@ -52,7 +52,7 @@ RUN if [ $(uname -m) != 'aarch64' ]; then \
       apt-get -y install srvadmin-base srvadmin-storageservices srvadmin-idrac7 && \
       rm /etc/apt/sources.list.d/linux.dell.com.sources.list && \
       apt-get -qy autoremove && \
-      apt-get -qy clean
+      apt-get -qy clean ; \
     fi
 
 COPY ./ /opt/packet-hardware/
