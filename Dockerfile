@@ -41,24 +41,10 @@ RUN curl -kLo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint
     apt clean -yq && \
     rm -rf /var/lib/apt/lists/*
 
-RUN if [ $(uname -m) != 'aarch64' ]; then \
-      apt-get update && \
-      apt-get install gnupg -y && \
-      echo 'deb http://linux.dell.com/repo/community/ubuntu trusty openmanage' \
-      | tee /etc/apt/sources.list.d/linux.dell.com.sources.list && \
-      gpg --keyserver pool.sks-keyservers.net --recv-key 1285491434D8786F && \
-      gpg -a --export 1285491434D8786F | apt-key add - && \
-      apt-get update && \
-      apt-get -y install srvadmin-base srvadmin-storageservices srvadmin-idrac7 && \
-      rm /etc/apt/sources.list.d/linux.dell.com.sources.list && \
-      apt-get -qy autoremove && \
-      apt-get -qy clean ; \
-    fi
-
 COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
-    apt install -y git python3 python3-distutils && \
+    apt install -y git python3 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3 && \
     pip3 install --no-cache-dir /opt/packet-hardware && \
     apt clean -qy && \
