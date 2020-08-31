@@ -19,7 +19,7 @@ RUN apt update && apt install -y \
     util-linux
 
 # Install mstflint
-RUN curl -kLo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
+RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
     tar -zxvf mstflint.tar.gz && \
     cd mstflint-*/ && \
     apt install -y \
