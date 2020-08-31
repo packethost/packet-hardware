@@ -473,7 +473,7 @@ def get_dell_baseboard_cpld(prop):
     if prop not in regex:
         return ""
 
-    cpld_version = cmd_output("racadm", "getversion", "-c")
+    cpld_version = cmd_output("/opt/dell/srvadmin/bin/idracadm7", "getversion", "-c")
 
     return __re_multiline_first(cpld_version, regex[prop]).strip()
 
