@@ -30,13 +30,14 @@ pip3 install git+https://github.com/packethost/packet-hardware.git@master
 The below command will run the script without posting the results.
 ```shell
 # Build image
-docker build -t packet-hardware .
+docker build -t packet-hardware:latest .
 
 # Run tool
 docker run --rm --privileged \
     -v /dev:/dev \
     -v /sys:/sys \
     -v /tmp:/tmp \
+    -net host
     packet-hardware inventory -u localhost --dry --cache-file /tmp/hardware.json
 ```
 
