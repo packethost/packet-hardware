@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
@@ -19,7 +19,7 @@ RUN apt update && apt install -y \
     util-linux
 
 # Install mstflint
-RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
+RUN curl -kLo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
     tar -zxvf mstflint.tar.gz && \
     cd mstflint-*/ && \
     apt install -y \
@@ -75,6 +75,8 @@ RUN echo "Installing mlxup..." && \
     echo "Installing PercCli..." && \
         tar -zxvC / -f /bin/src/perccli-*.tar.gz && \
         ln -nsf /opt/MegaRAID/perccli/perccli /usr/bin/ && \
+    echo "Installing IPMICfg..." && \
+        install -m 755 /bin/src/ipmicfg /usr/bin/ipmicfg && \
     rm -rf /bin/src
 
 ENTRYPOINT ["packet-hardware"]
