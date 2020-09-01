@@ -16,7 +16,8 @@ RUN apt update && apt install -y \
     lshw \
     pciutils \
     smartmontools \
-    util-linux
+    util-linux \
+    wget
 
 # Install mstflint
 RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
@@ -41,6 +42,17 @@ RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-
     apt clean -yq && \
     rm -rf /var/lib/apt/lists/*
 
+# Install racadm
+RUN apt-get update && apt-get install -y alien && \
+    rpm --import http://linux.dell.com/repo/pgp_pubkeys/0x1285491434D8786F.asc && \
+    wget \
+      https://dl.dell.com/FOLDER05920767M/1/DellEMC-iDRACTools-Web-LX-9.4.0-3732_A00.tar.gz \
+      http://linux.dell.com/repo/community/openmanage/940/bionic/pool/main/s/srvadmin-omilcore/srvadmin-omilcore_9.4.0_amd64.deb && \
+    tar -xvf DellEMC-iDRACTools-Web-LX-9.4.0-3732_A00.tar.gz && \
+    alien -i iDRACTools/racadm/RHEL8/x86_64/*.rpm && \
+    dpkg -i *.deb && \
+    rm -r *.tar.gz iDRACTools *.deb
+
 COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
@@ -63,8 +75,8 @@ RUN echo "Installing mlxup..." && \
         ln -nsf /opt/MegaRAID/perccli/perccli /usr/bin/ && \
     echo "Installing IPMICfg..." && \
         install -m 755 /bin/src/ipmicfg /usr/bin/ipmicfg && \
-    echo "Installing RACADM..." && \
-        dpkg -i /bin/src/*.deb && \
+    echo "Inserting dchipm.ini" && \
+        cp /bin/src/dchipm.ini /opt/dell/srvadmin/etc/srvadmin-hapi/ini/ && \
     rm -rf /bin/src
 
 ENTRYPOINT ["packet-hardware"]
