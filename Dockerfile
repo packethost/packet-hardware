@@ -29,7 +29,7 @@ RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-
         make \
         zlib1g-dev && \
     ./configure && \
-    make && \
+    make -j$(nproc) && \
     make install && \
     apt purge -y \
         g++ \
