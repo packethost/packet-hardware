@@ -3,6 +3,3 @@ binsrc/mlxup-aarch64 filter=lfs diff=lfs merge=lfs -text
 binsrc/mlxup-x86_64 filter=lfs diff=lfs merge=lfs -text
 binsrc/perccli-1.17.10-1.tar.gz filter=lfs diff=lfs merge=lfs -text
 binsrc/ipmicfg filter=lfs diff=lfs merge=lfs -text
-binsrc/srvadmin-argtable2_9.4.0-3733.15734_amd64.deb filter=lfs diff=lfs merge=lfs -text
-binsrc/srvadmin-hapi_9.4.0-3733.15734_amd64.deb filter=lfs diff=lfs merge=lfs -text
-binsrc/srvadmin-idracadm7_9.4.0-3733.15734_amd64.deb filter=lfs diff=lfs merge=lfs -text
