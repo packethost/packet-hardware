@@ -489,3 +489,29 @@ def get_smc_baseboard_cpld(prop):
     cpld_version = cmd_output("ipmicfg", "-summary")
 
     return __re_multiline_first(cpld_version, regex[prop]).strip()
+
+
+def get_dell_management_fw_version(prop):
+    regex = {
+        "firmware_version": re.compile(r"^Firmware Version\s+=\s+(.*)$", re.MULTILINE),
+    }
+
+    if prop not in regex:
+        return ""
+
+    racadm_mc_version = cmd_output("/opt/dell/srvadmin/bin/idracadm7", "getsysinfo")
+
+    return __re_multiline_first(racadm_mc_version, regex[prop]).strip()
+
+
+def get_smc_management_fw_version(prop):
+    regex = {
+        "firmware_version": re.compile(r"^Firmware Revision\s+:\s+(.*)$", re.MULTILINE),
+    }
+
+    if prop not in regex:
+        return ""
+
+    ipmicfg_mc_version = cmd_output("ipmicfg", "-summary")
+
+    return __re_multiline_first(ipmicfg_mc_version, regex[prop]).strip()
