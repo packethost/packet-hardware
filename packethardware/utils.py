@@ -467,7 +467,7 @@ def get_mc_info(prop):
 
 def get_dell_baseboard_cpld(prop):
     regex = {
-        "firmware_version": re.compile(r"^ CPLD Version\s+=\s+(.*)$", re.MULTILINE),
+        "firmware_version": re.compile(r"^ CPLD Version\s+=\s+(.*)$", re.MULTILINE)
     }
 
     if prop not in regex:
@@ -479,9 +479,7 @@ def get_dell_baseboard_cpld(prop):
 
 
 def get_smc_baseboard_cpld(prop):
-    regex = {
-        "firmware_version": re.compile(r"^CPLD Version\s+:\s+(.*)$", re.MULTILINE),
-    }
+    regex = {"firmware_version": re.compile(r"^CPLD Version\s+:\s+(.*)$", re.MULTILINE)}
 
     if prop not in regex:
         return ""

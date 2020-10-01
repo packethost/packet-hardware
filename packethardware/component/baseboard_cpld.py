@@ -6,7 +6,6 @@ class BaseboardCPLD(Component):
     def __init__(self):
         Component.__init__(self)
 
-
         self.name = "CPLD"
         self.vendor = utils.dmidecode_string("system-manufacturer")
         self.model = utils.dmidecode_string("system-product-name")
@@ -14,21 +13,22 @@ class BaseboardCPLD(Component):
 
         if self.vendor == "Dell Inc.":
             try:
-                self.firmware_version = utils.get_dell_baseboard_cpld("firmware_version")
-            except:
+                self.firmware_version = utils.get_dell_baseboard_cpld(
+                    "firmware_version"
+                )
+            except Exception:
                 utils.log(message="Something went wrong, probably no racadm.")
                 self.firmware_version = ""
         elif self.vendor == "Supermicro":
             try:
                 self.firmware_version = utils.get_smc_baseboard_cpld("firmware_version")
-            except:
+            except Exception:
                 utils.log(message="Something went wrong, probably no ipmicfg.")
                 self.firmware_version = ""
         else:
             self.firmware_version = ""
 
         self.data = {}
-
 
     @classmethod
     def list(cls, _):
