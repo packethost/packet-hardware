@@ -16,9 +16,23 @@ pipeline:
       - pip install black==19.3b0 pylama
       - black --check --diff .
       - pylama packethardware setup.py
+# test:
+#   image: python:${PYTHON_VERSION}
+#   commands:
+#     - pip install tox
+#     - tox -e py$(echo ${PYTHON_VERSION} | sed 's|\.||')
+  publish-image:
+    group: publish
+    image: plugins/docker
+    registry: quay.io
+    repo: quay.io/packet/packet-hardware
+    tags:
+      - ${DRONE_TAG}
+      - latest
+    secrets: [docker_username, docker_password]
+    when:
+      event: tag
+      branch:
+       - master
 
-#  test:
-#    image: python:${PYTHON_VERSION}
-#    commands:
-#      - pip install tox
-#      - tox -e py$(echo ${PYTHON_VERSION} | sed 's|\.||')
+
