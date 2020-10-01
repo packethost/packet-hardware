@@ -2,12 +2,12 @@ clone:
   git:
     image: quay.io/packet/drone-git
 
-matrix:
-  PYTHON_VERSION:
-    - 3.5
-    - 3.6
-    - 3.7
-    - 3.8
+# matrix:
+#   PYTHON_VERSION:
+#     - 3.5
+#     - 3.6
+#     - 3.7
+#     - 3.8
 
 pipeline:
   fmt_and_lint:
@@ -17,8 +17,8 @@ pipeline:
       - black --check --diff .
       - pylama packethardware setup.py
 
-  test:
-    image: python:${PYTHON_VERSION}
-    commands:
-      - pip install tox
-      - tox -e py$(echo ${PYTHON_VERSION} | sed 's|\.||')
+#  test:
+#    image: python:${PYTHON_VERSION}
+#    commands:
+#      - pip install tox
+#      - tox -e py$(echo ${PYTHON_VERSION} | sed 's|\.||')
