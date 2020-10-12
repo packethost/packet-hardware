@@ -1,10 +1,12 @@
-# Packet Hardware
+# Equinix Metal Hardware
 
-[![Build Status](https://cloud.drone.io/api/badges/packethost/packet-hardware/status.svg?ref=refs/heads/master)](https://cloud.drone.io/packethost/packet-hardware)
+[![Build Status](https://cloud.drone.io/api/badges/packethost/packet-hardware/status.svg?ref=refs/heads/master)](https://cloud.drone.io/packethost/packet-hardware) ![](https://img.shields.io/badge/Stability-Experimental-red.svg)
 
 This is a tool which is used within [OSIE](https://github.com/tinkerbell/osie)
 to audit hardware components to keep track of components that may need updating
 or components that may be missing.
+
+This repository is [Experimental](https://github.com/packethost/standards/blob/master/experimental-statement.md) meaning that it's based on untested ideas or techniques and not yet established or finalized or involves a radically new and innovative style! This means that support is best effort (at best!) and we strongly encourage you to NOT use this in production.
 
 ## Requirements
 
