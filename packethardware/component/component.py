@@ -34,7 +34,9 @@ class Component(object):
         components_json = json.dumps(
             {"components": [c.post_dict() for c in components]}
         )
-        response = utils.http_request(tinkerbell, components_json, "POST", ctx=ssl_context)
+        response = utils.http_request(
+            tinkerbell, components_json, "POST", ctx=ssl_context
+        )
 
         if response:
             utils.log(info="Posted components to tinkerbell", body=response.read())

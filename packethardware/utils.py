@@ -31,7 +31,9 @@ def http_download_file(_uri, _fh, _hash):
     return False
 
 
-def http_request(_uri, _body="", _method="GET", _content_type="application/json", ctx=None):
+def http_request(
+    _uri, _body="", _method="GET", _content_type="application/json", ctx=None
+):
     req = urllib.request.Request(_uri)
     req.add_header("Content-Type", _content_type)
 

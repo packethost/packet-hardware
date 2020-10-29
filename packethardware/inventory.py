@@ -42,17 +42,16 @@ from .component import *
     "--cert",
     "-E",
     default=None,
-    help="Path to local TLS certificate to use for HTTPS requests"
+    help="Path to local TLS certificate to use for HTTPS requests",
 )
 @click.option(
-    "--key",
-    "-k",
-    default=None,
-    help="Path to local TLS key to use for HTTPS requests"
+    "--key", "-k", default=None, help="Path to local TLS key to use for HTTPS requests"
 )
 def inventory(component_type, tinkerbell, verbose, dry, cache_file, cert, key):
     if (cert and not key) or (key and not cert):
-        raise click.UsageError("--cert and --key must be provided together or not at all")
+        raise click.UsageError(
+            "--cert and --key must be provided together or not at all"
+        )
 
     ssl_context = None
     if cert:
