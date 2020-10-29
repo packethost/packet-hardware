@@ -3,6 +3,7 @@
 import click
 from lxml import etree
 import jsonpickle
+import ssl
 
 from . import utils
 from .component import *
@@ -37,7 +38,28 @@ from .component import *
     default="/tmp/components.jsonpickle",
     help="Path to local json component store",
 )
-def inventory(component_type, tinkerbell, verbose, dry, cache_file):
+@click.option(
+    "--cert",
+    "-E",
+    default=None,
+    help="Path to local TLS certificate to use for HTTPS requests"
+)
+@click.option(
+    "--key",
+    "-k",
+    default=None,
+    help="Path to local TLS key to use for HTTPS requests"
+)
+def inventory(component_type, tinkerbell, verbose, dry, cache_file, cert, key):
+    if (cert and not key) or (key and not cert):
+        raise click.UsageError("--cert and --key must be provided together or not at all")
+
+    ssl_context = None
+    if cert:
+        ssl_context = ssl.create_default_context()
+        ssl_context.load_default_certs()
+        ssl_context.load_cert_chain(cert, key)
+
     lshw = etree.ElementTree(etree.fromstring(utils.lshw()))
     components = []
 
@@ -52,7 +74,7 @@ def inventory(component_type, tinkerbell, verbose, dry, cache_file):
         output.write(jsonpickle.encode(components))
 
     if not dry:
-        Component.post_all(components, tinkerbell)
+        Component.post_all(components, tinkerbell, ssl_context)
 
 
 if __name__ == "__main__":

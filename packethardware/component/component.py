@@ -20,8 +20,8 @@ class Component(object):
     def __str__(self):
         return json.dumps(self.post_dict())
 
-    def post(self, tinkerbell):
-        response = utils.http_request(tinkerbell, str(self), "POST")
+    def post(self, tinkerbell, ssl_context=None):
+        response = utils.http_request(tinkerbell, str(self), "POST", ctx=ssl_context)
 
         if response:
             utils.log(info="Posted component to tinkerbell", body=response.read())
@@ -30,11 +30,11 @@ class Component(object):
         return False
 
     @classmethod
-    def post_all(cls, components, tinkerbell):
+    def post_all(cls, components, tinkerbell, ssl_context=None):
         components_json = json.dumps(
             {"components": [c.post_dict() for c in components]}
         )
-        response = utils.http_request(tinkerbell, components_json, "POST")
+        response = utils.http_request(tinkerbell, components_json, "POST", ctx=ssl_context)
 
         if response:
             utils.log(info="Posted components to tinkerbell", body=response.read())

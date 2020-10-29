@@ -31,12 +31,12 @@ def http_download_file(_uri, _fh, _hash):
     return False
 
 
-def http_request(_uri, _body="", _method="GET", _content_type="application/json"):
+def http_request(_uri, _body="", _method="GET", _content_type="application/json", ctx=None):
     req = urllib.request.Request(_uri)
     req.add_header("Content-Type", _content_type)
 
     try:
-        response = urllib.request.urlopen(req, _body.encode("utf8"))
+        response = urllib.request.urlopen(req, _body.encode("utf8"), context=ctx)
     except urllib.error.HTTPError as e:
         log(
             method=_method, uri=_uri, code=str(e.code), reason=str(e.reason), body=_body

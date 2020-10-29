@@ -57,6 +57,9 @@ Options:
   -v, --verbose              Turn on verbose messages for debugging
   -d, --dry                  Don't actually post anything to API
   -c, --cache-file TEXT      Path to local json component store
+  -E, --cert TEXT            Path to local TLS certificate to use for HTTPS
+                             requests
+  -k, --key TEXT             Path to local TLS key to use for HTTPS requests
   --help                     Show this message and exit.
 ```
 
@@ -72,5 +75,8 @@ Options:
   -v, --verbose              Turn on verbose messages for debugging
   -d, --dry                  Don't actually post anything to API
   -c, --cache-file TEXT      Path to local json component store
+  -E, --cert TEXT            Path to local TLS certificate to use for HTTPS
+                             requests
+  -k, --key TEXT             Path to local TLS key to use for HTTPS requests
   --help                     Show this message and exit.
 ```
