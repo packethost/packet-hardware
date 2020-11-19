@@ -29,9 +29,13 @@ class Motherboard(Component):
 
         self.name = self.model
         self.serial = utils.xml_ev(lshw, element, "serial")
-        self.firmware_version = utils.xml_ev(
-            lshw, element, "node[@id='firmware']/version"
-        )
+
+        if self.vendor == "HPE":
+            self.firmware_version = utils.get_bios_revision("firmware_version")
+        else:
+            self.firmware_version = utils.xml_ev(
+                lshw, element, "node[@id='firmware']/version"
+            )
 
     @classmethod
     def list(cls, lshw):
