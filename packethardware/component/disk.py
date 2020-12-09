@@ -19,7 +19,11 @@ class Disk(Component):
     def __init__(self, lsblk):
         Component.__init__(self, lsblk, None)
         self.lsblk = lsblk
-        self.data = {"size": self.__size(), "devname": self.lsblk["name"]}
+        self.data = {
+            "size": self.__size(),
+            "devname": self.lsblk["name"],
+            "blockdevmodel": self.lsblk["model"],
+        }
 
         if self.__is_nvme():
             self.data["smart"] = utils.get_nvme_attributes(self.lsblk["name"])
@@ -29,7 +33,7 @@ class Disk(Component):
         match = re.search(r"^(\S+)_(\S+_\S+)", self.__getter("model"))
         if match:
             self.vendor = match.group(1)
-            self.model = match.group(2)
+            self.model = self.lsblk["model"]
             self.name = match.group(1) + " " + match.group(2)
         else:
             self.model = self.__getter("model")
