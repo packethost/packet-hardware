@@ -19,7 +19,7 @@ class Disk(Component):
     def __init__(self, lsblk):
         Component.__init__(self, lsblk, None)
         self.lsblk = lsblk
-        self.data = {"size": self.__size(), "devname": self.lsblk["name"]}
+        self.data = {"size": self.__size(), "devname": self.lsblk["name"], "blockdevmodel": self.lsblk["model"]}
 
         if self.__is_nvme():
             self.data["smart"] = utils.get_nvme_attributes(self.lsblk["name"])
