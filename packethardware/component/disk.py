@@ -29,7 +29,7 @@ class Disk(Component):
         match = re.search(r"^(\S+)_(\S+_\S+)", self.__getter("model"))
         if match:
             self.vendor = match.group(1)
-            self.model = match.group(2)
+            self.model = self.lsblk["model"]
             self.name = match.group(1) + " " + match.group(2)
         else:
             self.model = self.__getter("model")
