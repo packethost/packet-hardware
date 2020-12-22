@@ -22,7 +22,7 @@ class Disk(Component):
         self.data = {
             "size": self.__size(),
             "devname": self.lsblk["name"],
-            "blockdevmodel": self.lsblk["model"],
+            "blockdevmodel": self.lsblk["model"].strip(),
         }
 
         if self.__is_nvme():
@@ -33,7 +33,7 @@ class Disk(Component):
         match = re.search(r"^(\S+)_(\S+_\S+)", self.__getter("model"))
         if match:
             self.vendor = match.group(1)
-            self.model = self.lsblk["model"]
+            self.model = self.lsblk["model"].strip()
             self.name = match.group(1) + " " + match.group(2)
         else:
             self.model = self.__getter("model")
