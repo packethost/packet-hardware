@@ -396,23 +396,23 @@ def kvp(**kwargs):
 
 def normalize_vendor(vendor_string):
     vendor_re = {
+        "Cavium, Inc.": re.compile(r"^CAVIUM", re.IGNORECASE),
+        "Dell Inc.": re.compile(r"^DELL", re.IGNORECASE),
+        "Foxconn": re.compile(r"^FOXCONN", re.IGNORECASE),
+        "Hynix/Hyundai": re.compile(r"^HYNIX", re.IGNORECASE),
         "Intel": re.compile(r"^INTEL", re.IGNORECASE),
+        "LSI Logic": re.compile(r"^LSI", re.IGNORECASE),
+        "Mellanox Technologies": re.compile(r"^MELLANOX", re.IGNORECASE),
         "Micron Technology": [
             re.compile(r"^MICRON", re.IGNORECASE),
             re.compile(r"^002C00B3002C", re.IGNORECASE),
             re.compile(r"^MTFD", re.IGNORECASE),
         ],
-        "Synnex": re.compile(r"^SYNNEX", re.IGNORECASE),
-        "Samsung": re.compile(r"^SAMSUNG", re.IGNORECASE),
-        "Foxconn": re.compile(r"^FOXCONN", re.IGNORECASE),
         "Quanta": re.compile(r"^QUANTA", re.IGNORECASE),
-        "Hynix/Hyundai": re.compile(r"^HYNIX", re.IGNORECASE),
+        "Samsung": re.compile(r"^SAMSUNG", re.IGNORECASE),
         "Supermicro": re.compile(r"^SUPERMICRO", re.IGNORECASE),
-        "LSI Logic": re.compile(r"^LSI", re.IGNORECASE),
-        "Dell Inc.": re.compile(r"^DELL", re.IGNORECASE),
-        "Mellanox Technologies": re.compile(r"^MELLANOX", re.IGNORECASE),
+        "Synnex": re.compile(r"^SYNNEX", re.IGNORECASE),
         "Toshiba": re.compile(r"^TOSHIBA", re.IGNORECASE),
-        "Cavium, Inc.": re.compile(r"^CAVIUM", re.IGNORECASE),
     }
 
     for vendor_name, regex in vendor_re.items():
