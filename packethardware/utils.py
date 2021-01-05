@@ -412,7 +412,10 @@ def normalize_vendor(vendor_string):
         "Samsung": re.compile(r"^SAMSUNG", re.IGNORECASE),
         "Supermicro": re.compile(r"^SUPERMICRO", re.IGNORECASE),
         "Synnex": re.compile(r"^SYNNEX", re.IGNORECASE),
-        "Toshiba": re.compile(r"^TOSHIBA", re.IGNORECASE),
+        "Toshiba": [
+            re.compile(r"^TOSHIBA", re.IGNORECASE),
+            re.compile(r"^KXG", re.IGNORECASE),
+        ],
     }
 
     for vendor_name, regex in vendor_re.items():
