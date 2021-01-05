@@ -399,6 +399,9 @@ def normalize_vendor(vendor_string):
         "Cavium, Inc.": re.compile(r"^CAVIUM", re.IGNORECASE),
         "Dell Inc.": re.compile(r"^DELL", re.IGNORECASE),
         "Foxconn": re.compile(r"^FOXCONN", re.IGNORECASE),
+        "Hitachi": [
+            re.compile(r"^HGST", re.IGNORECASE),
+        ],
         "Hynix/Hyundai": re.compile(r"^HYNIX", re.IGNORECASE),
         "Intel": re.compile(r"^INTEL", re.IGNORECASE),
         "LSI Logic": re.compile(r"^LSI", re.IGNORECASE),
