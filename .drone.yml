@@ -10,12 +10,16 @@ clone:
 #     - 3.8
 
 pipeline:
-  fmt_and_lint:
+  pylama:
     image: python:3.8-alpine
     commands:
-      - pip install black==19.3b0 pylama
-      - black --check --diff .
+      - pip install pylama
       - pylama packethardware setup.py
+  black:
+    image: python:3.8-buster
+    commands:
+      - pip install black
+      - black --check --diff .
 # test:
 #   image: python:${PYTHON_VERSION}
 #   commands:
