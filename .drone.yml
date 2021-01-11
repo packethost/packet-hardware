@@ -13,7 +13,7 @@ pipeline:
   fmt_and_lint:
     image: python:3.8-alpine
     commands:
-      - pip install black==19.3b0 pylama
+      - pip install black pylama
       - black --check --diff .
       - pylama packethardware setup.py
 # test:
