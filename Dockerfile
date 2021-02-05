@@ -2,10 +2,6 @@ FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 
-ARG MSTFLINT_RELEASE=4.14.0-1
-ARG MSTFLINT_SHA512=965b25141d1b960bb575fc9fb089e912b0408af72919d23f295c6a8e8650c95c9459cb496171dca7f818252a180bd85bee8ed0f876159279013828478a0c2101
-ARG MSTFLINT_BASEURL=https://github.com/Mellanox/mstflint/releases/download/
-
 # Install tools
 RUN apt update && apt install -y \
     curl \
@@ -20,6 +16,10 @@ RUN apt update && apt install -y \
     wget
 
 # Install mstflint
+ARG MSTFLINT_RELEASE=4.14.0-1
+ARG MSTFLINT_SHA512=965b25141d1b960bb575fc9fb089e912b0408af72919d23f295c6a8e8650c95c9459cb496171dca7f818252a180bd85bee8ed0f876159279013828478a0c2101
+ARG MSTFLINT_BASEURL=https://github.com/Mellanox/mstflint/releases/download/
+
 RUN curl -Lo mstflint.tar.gz "${MSTFLINT_BASEURL}/v${MSTFLINT_RELEASE}/mstflint-${MSTFLINT_RELEASE}.tar.gz" && \
     tar -zxvf mstflint.tar.gz && \
     cd mstflint-*/ && \
