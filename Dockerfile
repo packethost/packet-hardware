@@ -72,7 +72,7 @@ COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
     apt install -y git python3 && \
-    curl https://bootstrap.pypa.io/3.5/get-pip.py | python3 && \
+    curl https://bootstrap.pypa.io/pip/3.5/get-pip.py | python3 && \
     pip3 install --no-cache-dir /opt/packet-hardware && \
     apt clean -qy && \
     rm -rf /var/lib/apt/lists/* && \
