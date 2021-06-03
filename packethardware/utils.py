@@ -504,3 +504,13 @@ def get_bios_revision(prop):
     bios_revision = cmd_output("dmidecode", "-t", "bios")
 
     return __re_multiline_first(bios_revision, regex[prop]).strip()
+
+
+def get_bios_features():
+    bios_features = cmd_output("getbiosconfig")
+
+    # getbiosconfig returns pretty-printed json by default. convert it back
+    # to compact json
+    obj = json.loads(bios_features)
+
+    return json.dumps(obj)

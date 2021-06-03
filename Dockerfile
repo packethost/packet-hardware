@@ -92,6 +92,8 @@ RUN echo "Installing mlxup..." && \
         install -m 755 /bin/src/ipmicfg /usr/bin/ipmicfg && \
     echo "Inserting dchipm.ini" && \
         cp /bin/src/dchipm.ini /opt/dell/srvadmin/etc/srvadmin-hapi/ini/ && \
+    echo "Installing ironlib getbiosconfig" && \
+        install -m 755 /bin/src/getbiosconfig /usr/bin/ && \
     rm -rf /bin/src
 
 ENTRYPOINT ["packet-hardware"]
