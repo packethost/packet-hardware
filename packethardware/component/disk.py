@@ -54,6 +54,9 @@ class Disk(Component):
         else:
             self.vendor = utils.normalize_vendor(self.vendor)
 
+    def __is_boss(self):
+        return self.lsblk["model"].startswith("DELLBOSS")
+
     def __is_nvme(self):
         return self.lsblk["name"].startswith("/dev/nvme")
 
