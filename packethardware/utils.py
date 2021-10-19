@@ -206,6 +206,21 @@ def get_hdparm_diskprop(device, prop):
     return __re_multiline_first(hdparm_data, regex[prop]).strip()
 
 
+def get_dellboss_diskprop(prop):
+    regex = {
+        "name": re.compile(r"^   ProductId +=+(.*)$", re.MULTILINE),
+        "vendor": re.compile(r"^   Manufacturer +=+(.*)$", re.MULTILINE),
+        "model": re.compile(r"^   PartNumber +=+(.*)$", re.MULTILINE),
+        "serial": re.compile(r"^   SerialNumber +=+(.*)$", re.MULTILINE),
+        "firmware_version": re.compile(r"^   Revision +=+(.*)$", re.MULTILINE),
+    }
+
+    if prop not in regex:
+        return ""
+
+    return __re_multiline_first(pdisk_output, regex[prop]).strip()
+
+
 def __re_multiline_first(data, regex_c):
     m = regex_c.search(data)
 
