@@ -221,6 +221,16 @@ def get_dellboss_diskprop(prop):
     return __re_multiline_first(pdisk_output, regex[prop]).strip()
 
 
+def get_boss_devices():
+    boss_data = cmd_output("racadm", "storage", "get", "pdisks")
+
+    boss_map = {}
+
+    disks = []
+
+    return smart_map
+
+
 def __re_multiline_first(data, regex_c):
     m = regex_c.search(data)
 
