@@ -8,7 +8,7 @@ env:
 steps:
    - label: ":test: Run Tests"
      key: "test"
-     commands: ["echo", "TODO"]
+     command: "echo TODO: run the tests here"
 
    - label: ":build: docker build/push"
      skip: true
