@@ -6,15 +6,34 @@ env:
   IMAGE_TAG: ${BUILDKITE_BUILD_NUMBER}-${BUILDKITE_COMMIT}
 
 steps:
-   - label: ":test: Run Tests"
-     key: "test"
-     command: "echo TODO: run the tests here"
+   - label: ":test: Python Pylama Tests"
+     key: "test-pylama"
+     commands:
+       - pip install pylama
+       - echo Running pylama packethardware setup.py
+       - pylama packethardware setup.py
+       - echo Done
+     plugins:
+       - docker#v3.8.0:
+          image: "python:3.8-alpine"
+
+   - label: ":test: Python Black Tests"
+     key: "test-black"
+     commands:
+       - pip install black
+       - echo Running black --check --diff .
+       - black --check --diff .
+       - echo Done
+     plugins:
+       - docker#v3.8.0:
+          image: "python:3.8-buster"
 
    - label: ":build: docker build/push"
-     skip: true
      key: "build"
      branches: "master"
-     depends_on: ["test"]
+     depends_on:
+       - "test-pylama"
+       - "test-black"
      commands: |
        echo --- Build Docker Image - packet-hardware
        docker build . -t "$QUAY_REPO:$IMAGE_TAG"
