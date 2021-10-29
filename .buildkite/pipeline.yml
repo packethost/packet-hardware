@@ -8,9 +8,10 @@ env:
 steps:
    - label: ":test: Run Tests"
      key: "test"
-     commands: ["return", 127]
+     commands: ["echo", "TODO"]
 
    - label: ":build: docker build/push"
+     skip: true
      key: "build"
      branches: "master"
      depends_on: ["test"]
