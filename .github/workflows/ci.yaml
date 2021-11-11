@@ -28,6 +28,8 @@ jobs:
     needs: [pylama, black]
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: 'true'
       - uses: docker/setup-buildx-action@v1
         id: buildx
       - uses: docker/metadata-action@v3
