@@ -1,6 +1,6 @@
 # Equinix Metal Hardware
 
-[![Build Status](https://cloud.drone.io/api/badges/packethost/packet-hardware/status.svg?ref=refs/heads/master)](https://cloud.drone.io/packethost/packet-hardware) ![](https://img.shields.io/badge/Stability-Experimental-red.svg)
+![Continuous Integration](https://github.com/packethost/packet-hardware/actions/workflows/ci.yaml/badge.svg)
 
 This is a tool which is used within [OSIE](https://github.com/tinkerbell/osie)
 to audit hardware components to keep track of components that may need updating
