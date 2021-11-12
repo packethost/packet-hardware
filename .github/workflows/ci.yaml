@@ -57,6 +57,7 @@ jobs:
           platforms: linux/amd64
           push: ${{ github.event_name == 'create' && github.event.ref_type == 'tag' }}
           tags: ${{ steps.meta.outputs.tags }}
+          context: '.'
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           builder: ${{ steps.buildx.outputs.name }}
