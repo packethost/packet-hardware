@@ -37,6 +37,7 @@ jobs:
         with:
           images: quay.io/packet/packet-hardware
           tags: |
+            type=ref,event=tag
             type=sha
             type=ref,event=branch
       - uses: docker/login-action@v1
