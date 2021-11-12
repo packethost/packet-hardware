@@ -22,7 +22,7 @@ jobs:
           python-version: '3.8'
       - run: pip install black
       - run: black --check --diff .
-  publish-docker-image:
+  build-and-publish-docker-image:
     name: build image and possibly push image to quay.io
     runs-on: ubuntu-latest
     needs: [pylama, black]
