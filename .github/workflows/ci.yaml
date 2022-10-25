@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           lfs: 'true'
-      - uses: docker/setup-buildx-action@v1
+      - uses: docker/setup-buildx-action@v2
         id: buildx
       - uses: docker/metadata-action@v3
         id: meta
