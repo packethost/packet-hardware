@@ -11,7 +11,7 @@ setup(
     url="https://github.com/packethost/packet-hardware/",
     packages=find_packages(),
     install_requires=[
-        "click >=6.0,<7.0",
+        "click >=8.1,<8.2",
         "jsonpickle >=0.9,<1.0",
         "lxml >=4.5,<4.6",
         "structlog >=17.2<18.0",
