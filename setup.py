@@ -13,7 +13,7 @@ setup(
     install_requires=[
         "click >=6.0,<7.0",
         "jsonpickle >=0.9,<1.0",
-        "lxml >=4.5,<4.6",
+        "lxml >=4.9,<4.10",
         "structlog >=17.2<18.0",
         "urllib3 >=1.24.2, <2",
     ],
