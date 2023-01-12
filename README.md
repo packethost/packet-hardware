@@ -10,7 +10,7 @@ This repository is [Experimental](https://github.com/packethost/standards/blob/m
 
 ## Requirements
 
-- `python` version `3.5` or higher
+- `python` version `3.7` or higher
 - `pip`
 - `dmidecode`
 - `hdparm`
