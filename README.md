@@ -8,15 +8,20 @@ or components that may be missing.
 
 This repository is [Experimental](https://github.com/packethost/standards/blob/master/experimental-statement.md) meaning that it's based on untested ideas or techniques and not yet established or finalized or involves a radically new and innovative style! This means that support is best effort (at best!) and we strongly encourage you to NOT use this in production.
 
-## Requirements
+## Required Binaries/Tools
 
-- `python` version `3.5` or higher
-- `pip`
 - `dmidecode`
+- `ethtool`
+- `getbiosconfig`
 - `hdparm`
+- `idracadm7`
+- `ipmicfg`
 - `ipmitool`
 - `lsblk`
 - `lshw`
+- `lspci`
+- `MegaCli64`
+- `mlxup`
 - `smartctl`
 
 Reference the Dockerfile for other dependency requirements.
