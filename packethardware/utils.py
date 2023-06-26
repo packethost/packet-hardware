@@ -346,7 +346,7 @@ def get_dmidecode_prop(handle, dmi_type, prop):
     r = re.compile(
         r"^Handle (\S+), DMI type 17, 40 bytes\nMemory Device((?:\n.+)+)", re.MULTILINE
     )
-    for (dmi_handle, body) in re.findall(r, dmi_data):
+    for dmi_handle, body in re.findall(r, dmi_data):
         if handle != dmi_handle:
             continue
 
@@ -457,6 +457,9 @@ def get_mc_info(prop):
         "vendor": re.compile(r"^Manufacturer Name\s+:\s+(.*)$", re.MULTILINE),
         "firmware_version": re.compile(r"^Firmware Revision\s+:\s+(.*)$", re.MULTILINE),
         "guid": re.compile(r"^System GUID\s+:\s+(.*)$", re.MULTILINE),
+        "aux": re.compile(
+            r"^Aux Firmware Rev Info\s+:\s+(0x.*\s+0x.*\s+0x.*\s+0x.*)$", re.MULTILINE
+        ),
     }
 
     if prop not in regex:
@@ -466,7 +469,17 @@ def get_mc_info(prop):
         "ipmitool", "mc", "info"
     )
 
-    return __re_multiline_first(mc_info, regex[prop]).strip()
+    if prop == "aux":
+        return re.sub(r"\s+", " ", __re_multiline_first(mc_info, regex[prop]).strip())
+    elif prop == "firmware_version":
+        # Note that aux byte 0 is patch version in BCD, so 0x11 mean X.Y.11
+        return (
+            __re_multiline_first(mc_info, regex[prop]).strip()
+            + "."
+            + get_mc_info("aux")[2:4]
+        )
+    else:
+        return __re_multiline_first(mc_info, regex[prop]).strip()
 
 
 def get_dell_baseboard_cpld(prop):
