@@ -60,7 +60,7 @@ RUN curl -sL "${SMARTMONTOOLS_BASEURL}/${SMARTMONTOOLS_RELEASE}/${SMARTMONTOOLS_
 # Install racadm
 RUN apt-get update && apt-get install -y alien && \
     rpm --import http://linux.dell.com/repo/pgp_pubkeys/0x1285491434D8786F.asc && \
-    wget \
+    wget -U "Mozilla" \
       https://dl.dell.com/FOLDER05920767M/1/DellEMC-iDRACTools-Web-LX-9.4.0-3732_A00.tar.gz \
       http://linux.dell.com/repo/community/openmanage/940/bionic/pool/main/s/srvadmin-omilcore/srvadmin-omilcore_9.4.0_amd64.deb && \
     tar -xvf DellEMC-iDRACTools-Web-LX-9.4.0-3732_A00.tar.gz && \
