@@ -206,11 +206,11 @@ def get_hdparm_diskprop(device, prop):
     return __re_multiline_first(hdparm_data, regex[prop]).strip()
 
 
-def get_dellboss_diskprop(prop):
+def get_dellboss_diskprop(prop, pdisk_output):
     regex = {
-        "name": re.compile(r"^   ProductId +=+(.*)$", re.MULTILINE),
+        "name": re.compile(r"^   Name +=+(.*)$", re.MULTILINE),
         "vendor": re.compile(r"^   Manufacturer +=+(.*)$", re.MULTILINE),
-        "model": re.compile(r"^   PartNumber +=+(.*)$", re.MULTILINE),
+        "model": re.compile(r"^   ProductId +=+(.*)$", re.MULTILINE),
         "serial": re.compile(r"^   SerialNumber +=+(.*)$", re.MULTILINE),
         "firmware_version": re.compile(r"^   Revision +=+(.*)$", re.MULTILINE),
     }
@@ -220,16 +220,27 @@ def get_dellboss_diskprop(prop):
 
     return __re_multiline_first(pdisk_output, regex[prop]).strip()
 
-
 def get_boss_devices():
-    boss_data = cmd_output("racadm", "storage", "get", "pdisks")
+    disks_data = cmd_output("racadm", "storage", "get", "pdisks")
 
-    boss_map = {}
+    # Extract all disk identifiers
+    disk_identifiers = re.findall(r"(Disk.Direct.\d-\d:AHCI.Slot.\d-\d)", disks_data)
 
     disks = []
 
-    return smart_map
+    for identifier in disk_identifiers:
+        pdisk_data = cmd_output("racadm", "storage", "get", "pdisks:" + identifier)
 
+        disk_info = {
+            "name": get_dellboss_diskprop("name", pdisk_data),
+            "vendor": get_dellboss_diskprop("vendor", pdisk_data),
+            "model": get_dellboss_diskprop("model", pdisk_data),
+            "serial": get_dellboss_diskprop("serial", pdisk_data),
+            "firmware_version": get_dellboss_diskprop("firmware_version", pdisk_data),
+        }
+        disks.append(disk_info)
+
+    return disks
 
 def __re_multiline_first(data, regex_c):
     m = regex_c.search(data)
