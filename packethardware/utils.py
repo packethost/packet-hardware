@@ -87,7 +87,7 @@ def ethtool_mac(interface_name):
 
 def lsblk():
     lsblk_json = cmd_output(
-        "lsblk", "-b", "-J", "-p", "-o", "NAME,SERIAL,MODEL,SIZE,REV,VENDOR"
+        "lsblk", "-b", "-J", "-p", "-o", "NAME,SERIAL,MODEL,SIZE,REV,ROTA,VENDOR"
     )
     return json.loads(lsblk_json)["blockdevices"]
 
