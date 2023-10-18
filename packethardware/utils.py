@@ -546,3 +546,17 @@ def get_bios_features():
     obj = json.loads(bios_features)
 
     return json.dumps(obj)
+
+
+def get_hardwarevendor_from_hostnamectl(self):
+    hostnamectl_output = cmd_output("hostnamectl", "--json", "pretty")
+    if hostnamectl_output:
+        try:
+            data = json.loads(hostnamectl_output)
+            return data.get("HardwareVendor", None)
+        except json.JSONDecodeError:
+            print("Failed to parse JSON output")
+            return None
+    else:
+        print("Failed to get hostnamectl output")
+        return None

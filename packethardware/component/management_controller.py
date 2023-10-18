@@ -28,6 +28,10 @@ class ManagementController(Component):
             self.name = self.model + " Base Management Controller"
 
         self.vendor = utils.normalize_vendor(utils.get_mc_info("vendor"))
+
+        if "unknown" in self.vendor.lower():
+            self.vendor = utils.get_hardwarevendor_from_hostnamectl(self)
+
         self.serial = utils.get_mc_info("guid")
 
         self.data = {"aux": utils.get_mc_info("aux")}
