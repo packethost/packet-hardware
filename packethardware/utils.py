@@ -119,6 +119,25 @@ def get_smart_devices():
     return smart_map
 
 
+def get_dell_bios_serial_comm_settings(self):
+    racadm_output = cmd_output(
+        "/opt/dell/srvadmin/bin/idracadm7", "get", "BIOS.SerialCommSettings"
+    )
+
+    serial_settings = {}
+
+    lines = racadm_output.strip().split("\n")[1:]
+
+    for line in lines:
+        if "=" not in line:
+            continue
+
+        key, value = line.split("=", 1)
+        serial_settings[key.strip()] = value.strip()
+
+    return serial_settings
+
+
 def get_nvme_attributes(device):
     smartctl_json = cmd_output("smartctl", "--all", "--json", device)
     return json.loads(smartctl_json)["nvme_smart_health_information_log"]
