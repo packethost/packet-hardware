@@ -36,6 +36,26 @@ class ManagementController(Component):
 
         self.data = {"aux": utils.get_mc_info("aux")}
 
+        if "supermicro" in self.vendor.lower():
+            self.data["tty"] = utils.get_supermicro_serial_port_settings(self)
+            self._set_tty_port_guess()
+        elif "dell" in self.vendor.lower():
+            self.data["tty"] = utils.get_dell_bios_serial_comm_settings(self)
+            self._set_tty_port_guess()
+        else:
+            pass
+
+    def _set_tty_port_guess(self):
+        serial_comm = self.data["tty"].get("SerialComm")
+        out_of_band_mgmt_port = (
+            self.data["tty"]
+            .get("Serial Port Console Redirection", {})
+            .get("Out-of-Band Mgmt Port")
+        )
+
+        if serial_comm == "OnConRedirCom1" or out_of_band_mgmt_port == "COM1":
+            self.data["tty"]["ttyPortGuess"] = "ttyS1"
+
     @classmethod
     def list(cls, _):
         bmcs = []
