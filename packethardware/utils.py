@@ -138,6 +138,46 @@ def get_dell_bios_serial_comm_settings(self):
     return serial_settings
 
 
+def get_supermicro_serial_port_settings(self):
+    # cmd_output was giving me UnicodeDecodeError: 'utf-8' so just do our own
+    command = ["/opt/supermicro/sum", "-c", "GetCurrentBiosCfg", "--no_banner"]
+    result = subprocess.run(command, capture_output=True, check=True).stdout
+
+    # get rid of any empty lines at the start
+    result = result.lstrip(b"\n")
+
+    parser = etree.XMLParser(encoding="ISO-8859-1")
+    root = etree.fromstring(result, parser=parser)
+
+    menu_sections = root.xpath(
+        ".//Menu[@name='Serial Port 1 Configuration' or "
+        "@name='Serial Port 2 Configuration' or "
+        "@name='Serial Port Console Redirection']"
+    )
+
+    settings_dict = {}
+
+    for menu_section in menu_sections:
+        menu_name = menu_section.get("name")
+
+        settings = menu_section.findall(".//Setting[@selectedOption]")
+
+        for setting in settings:
+            name = setting.get("name")
+            selected_option = setting.get("selectedOption")
+
+            if selected_option == "Auto":
+                option_value_1 = setting.find(".//Option[@value='1']")
+                if option_value_1 is not None:
+                    selected_option = f"Auto ({option_value_1.text})"
+
+            if menu_name not in settings_dict:
+                settings_dict[menu_name] = {}
+            settings_dict[menu_name][name] = selected_option
+
+    return settings_dict
+
+
 def get_nvme_attributes(device):
     smartctl_json = cmd_output("smartctl", "--all", "--json", device)
     return json.loads(smartctl_json)["nvme_smart_health_information_log"]
