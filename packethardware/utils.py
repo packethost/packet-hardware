@@ -169,7 +169,7 @@ def get_supermicro_serial_port_settings(self):
             if selected_option == "Auto":
                 option_value_1 = setting.find(".//Option[@value='1']")
                 if option_value_1 is not None:
-                    selected_option = "Auto (" + option_value_1.text + ")"
+                    selected_option = "Auto (%s)" % option_value_1.text
 
             if menu_name not in settings_dict:
                 settings_dict[menu_name] = {}
