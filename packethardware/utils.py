@@ -141,7 +141,7 @@ def get_dell_bios_serial_comm_settings(self):
 def get_supermicro_serial_port_settings(self):
     # cmd_output was giving me UnicodeDecodeError: 'utf-8' so just do our own
     command = ["/opt/supermicro/sum", "-c", "GetCurrentBiosCfg", "--no_banner"]
-    result = subprocess.run(command, capture_output=True, check=True).stdout
+    result = subprocess.check_output(command)
 
     # get rid of any empty lines at the start
     result = result.lstrip(b"\n")
@@ -169,7 +169,7 @@ def get_supermicro_serial_port_settings(self):
             if selected_option == "Auto":
                 option_value_1 = setting.find(".//Option[@value='1']")
                 if option_value_1 is not None:
-                    selected_option = f"Auto ({option_value_1.text})"
+                    selected_option = "Auto (%s)" % option_value_1.text
 
             if menu_name not in settings_dict:
                 settings_dict[menu_name] = {}
