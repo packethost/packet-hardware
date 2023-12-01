@@ -74,7 +74,6 @@ def cmd_output(*cmd):
 
     if retcode:
         log(cmd=cmd[0], errorcode=retcode)
-        return ""
 
     return out.decode()
 
