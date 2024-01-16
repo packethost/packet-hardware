@@ -38,7 +38,9 @@ from .component import *
     help="Path to local json component store",
 )
 def inventory(component_type, tinkerbell, verbose, dry, cache_file):
-    lshw = etree.ElementTree(etree.fromstring(utils.lshw()))
+    lshw = etree.ElementTree(
+        etree.fromstring(utils.lshw().replace('standalone="yes"', ""))
+    )
     components = []
 
     for t in component_type:
