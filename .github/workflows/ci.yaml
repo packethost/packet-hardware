@@ -43,6 +43,7 @@ jobs:
         run: |
           pip install .
           packet-hardware --help
+          packet-hardware inventory -d -u localhost
 
   build-and-publish-docker-image:
     name: build image and possibly push image to quay.io
