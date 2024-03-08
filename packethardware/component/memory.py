@@ -27,9 +27,11 @@ class Memory(Component):
             # human-readable number
             "size": str(int(int(utils.xml_ev(lshw, element, "size")) / 1073741824))
             + "GB",
-            "clock": int(utils.xml_ev(lshw, element, "clock")) / 1000000
-            if utils.xml_ev(lshw, element, "clock")
-            else "",
+            "clock": (
+                int(utils.xml_ev(lshw, element, "clock")) / 1000000
+                if utils.xml_ev(lshw, element, "clock")
+                else ""
+            ),
             "type": utils.get_dmidecode_prop(
                 "0x" + utils.xml_ev(lshw, element, "@handle", True).split(":", 1)[1],
                 "17",
