@@ -16,11 +16,13 @@ class Disk(Component):
             disks.append(cls(disk))
         return disks
 
+# FS-1286 The API requires data for the disk size field to be in string format and
+# lsblk returns an integer value in the output.
     def __init__(self, lsblk):
         Component.__init__(self, lsblk, None)
         self.lsblk = lsblk
         self.data = {
-            "size": self.__size(),
+            "size": str(self.__size()),
             "devname": self.lsblk["name"],
             "blockdevmodel": self.lsblk["model"].strip(),
             "rota": self.lsblk["rota"],
