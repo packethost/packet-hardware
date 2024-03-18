@@ -25,7 +25,11 @@ class Disk(Component):
             "size": str(self.__size()),
             "devname": self.lsblk["name"],
             "blockdevmodel": self.lsblk["model"].strip(),
-            "rota": self.lsblk["rota"],
+            "rota": (
+                self.lsblk["rota"]
+                if isinstance(self.lsblk["rota"], str)
+                else "1" if self.lsblk["rota"] else "0"
+            ),
         }
 
         if self.__is_nvme():
