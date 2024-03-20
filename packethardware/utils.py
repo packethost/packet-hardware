@@ -278,6 +278,7 @@ def get_dellboss_diskprop(prop, pdisk_output):
 
     return __re_multiline_first(pdisk_output, regex[prop]).strip()
 
+
 def get_boss_devices():
     disks_data = cmd_output("racadm", "storage", "get", "pdisks")
 
@@ -299,6 +300,7 @@ def get_boss_devices():
         disks.append(disk_info)
 
     return disks
+
 
 def __re_multiline_first(data, regex_c):
     m = regex_c.search(data)
