@@ -8,11 +8,13 @@ class Disk(Component):
     @classmethod
     def list(cls, _):
         disks = []
-        for disk in utils.lsblk():
+        jsondisks, tool = utils.lsblk()
+        for disk in jsondisks:
             if not disk["name"].startswith("/dev/sd") and not disk["name"].startswith(
                 "/dev/nvme"
             ):
                 continue
+            disk["tool"] = tool
             disks.append(cls(disk))
         return disks
 
