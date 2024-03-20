@@ -23,11 +23,15 @@ class Memory(Component):
 
         self.data = {
             "slot": utils.xml_ev(lshw, element, "slot"),
-            "size": str(int(int(utils.xml_ev(lshw, element, "size")) / 1024000000))
+            # "size" is reported in bytes, so divide by 1024^3 to get an accurate
+            # human-readable number
+            "size": str(int(int(utils.xml_ev(lshw, element, "size")) / 1073741824))
             + "GB",
-            "clock": int(utils.xml_ev(lshw, element, "clock")) / 1000000
-            if utils.xml_ev(lshw, element, "clock")
-            else "",
+            "clock": (
+                int(utils.xml_ev(lshw, element, "clock")) / 1000000
+                if utils.xml_ev(lshw, element, "clock")
+                else ""
+            ),
             "type": utils.get_dmidecode_prop(
                 "0x" + utils.xml_ev(lshw, element, "@handle", True).split(":", 1)[1],
                 "17",

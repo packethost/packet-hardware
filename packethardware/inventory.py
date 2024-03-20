@@ -38,7 +38,9 @@ from .component import *
     help="Path to local json component store",
 )
 def inventory(component_type, tinkerbell, verbose, dry, cache_file):
-    lshw = etree.ElementTree(etree.fromstring(utils.lshw()))
+    lshw = etree.ElementTree(
+        etree.fromstring(utils.lshw().replace('standalone="yes"', ""))
+    )
     components = []
 
     for t in component_type:
@@ -52,7 +54,9 @@ def inventory(component_type, tinkerbell, verbose, dry, cache_file):
         output.write(jsonpickle.encode(components))
 
     if not dry:
-        Component.post_all(components, tinkerbell)
+        post_ok = Component.post_all(components, tinkerbell)
+        if not post_ok:
+            raise Exception("POST to {} failed".format(tinkerbell))
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ class ManagementController(Component):
             self.name = self.model + " Base Management Controller"
 
         self.vendor = utils.normalize_vendor(utils.get_mc_info("vendor"))
+
         self.serial = utils.get_mc_info("guid")
 
         self.data = {"aux": utils.get_mc_info("aux")}
