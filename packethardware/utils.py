@@ -88,7 +88,8 @@ def lsblk():
     lsblk_json = cmd_output(
         "lsblk", "-b", "-J", "-p", "-o", "NAME,SERIAL,MODEL,SIZE,REV,ROTA,VENDOR"
     )
-    return json.loads(lsblk_json)["blockdevices"]
+    lsblk_tool = cmd_output("lsblk", "-V").rstrip()
+    return (json.loads(lsblk_json)["blockdevices"], lsblk_tool)
 
 
 def get_smart_devices():
