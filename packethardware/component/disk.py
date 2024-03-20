@@ -32,6 +32,7 @@ class Disk(Component):
                 if isinstance(self.lsblk["rota"], str)
                 else "1" if self.lsblk["rota"] else "0"
             ),
+            "tool": self.lsblk["tool"],
         }
 
         if self.__is_nvme():
