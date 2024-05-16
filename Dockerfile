@@ -71,9 +71,8 @@ RUN apt-get update && apt-get install -y alien && \
 COPY ./ /opt/packet-hardware/
 # Install packet-hardware
 RUN apt update && \
-    apt install -y git python3 && \
-    curl https://bootstrap.pypa.io/pip/3.5/get-pip.py | python3 && \
-    pip3 install --no-cache-dir /opt/packet-hardware && \
+    apt install -y git python3 python3-pip && \
+    pip3 install --no-cache-dir --break-system-packages /opt/packet-hardware && \
     apt clean -qy && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /opt/packet-hardware
