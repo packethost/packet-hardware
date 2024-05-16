@@ -25,7 +25,6 @@ jobs:
       - run: pylama packethardware setup.py
 
   cli-test:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
@@ -34,6 +33,17 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+        os-version:
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
+          - ubuntu-latest
+        exclude:
+          - os-version: ubuntu-24.04
+            python-version: "3.7"
+          - os-version: ubuntu-24.04
+            python-version: "3.8"
+    runs-on: ${{matrix.os-version}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -43,6 +53,8 @@ jobs:
         run: |
           pip install .
           packet-hardware --help
+          # apt update to use same versions as OSIE
+          sudo apt-get update
           sudo apt-get install ipmitool smartmontools jq
           packet-hardware inventory -d -u localhost -c cache.json
           cat cache.json
