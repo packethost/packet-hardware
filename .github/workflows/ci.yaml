@@ -25,7 +25,6 @@ jobs:
       - run: pylama packethardware setup.py
 
   cli-test:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
@@ -34,17 +33,35 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+        os-version:
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
+          - ubuntu-latest
+        exclude:
+          - os-version: ubuntu-24.04
+            python-version: "3.7"
+          - os-version: ubuntu-24.04
+            python-version: "3.8"
+    runs-on: ${{matrix.os-version}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "${{matrix.python-version}}"
-      - name: Basic cli test on Python ${{matrix.python-version}}
+      - name: Test on Python ${{matrix.python-version}}, ${{matrix.os-version}}
         run: |
           pip install .
           packet-hardware --help
-          sudo apt-get install ipmitool smartmontools
-          packet-hardware inventory -d -u localhost
+          # apt update to use same versions as OSIE
+          sudo apt-get update
+          sudo apt-get install ipmitool smartmontools jq
+          packet-hardware inventory -d -u localhost -c cache.json
+          cat cache.json
+          # Verify there is at least one ProcessorComponent
+          jq -e '.[] | select(.component_type == "ProcessorComponent")' cache.json
+          # Verify there is at least one DiskComponent
+          jq -e '.[] | select(.component_type == "DiskComponent")' cache.json
 
   build-and-publish-docker-image:
     name: build image and possibly push image to quay.io
