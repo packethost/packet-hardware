@@ -96,7 +96,7 @@ jobs:
           key: ${{ runner.os }}-cache
           restore-keys: |
             ${{ runner.os }}-cache
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
           push: ${{ github.event_name == 'create' && github.event.ref_type == 'tag' }}
