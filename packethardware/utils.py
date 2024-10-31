@@ -533,6 +533,17 @@ def get_mc_info(prop):
     if prop == "aux":
         return re.sub(r"\s+", " ", __re_multiline_first(mc_info, regex[prop]).strip())
     elif prop == "firmware_version":
+        # Dell version encoding
+        # Their version is A.B.C.D, but we only report A.B.C as D is always 0
+        # aux: "0x00 0x1e 0x1e 0x00" -> ".30", not ".30.00"
+        if get_mc_info("vendor") == "DELL Inc":
+            return (
+                __re_multiline_first(mc_info, regex[prop]).strip()
+                + "."
+                + str(int(get_mc_info("aux")[5:9],16))
+            )
+
+        # firmware_version provides X.Y, aux 1st byte provides .Z
         # Note that aux byte 0 is patch version in BCD, so 0x11 mean X.Y.11
         return (
             __re_multiline_first(mc_info, regex[prop]).strip()
