@@ -536,7 +536,7 @@ def get_mc_info(prop):
         # Dell version encoding
         # Their version is A.B.C.D, but we only report A.B.C as D is always 0
         # aux: "0x00 0x1e 0x1e 0x00" -> ".30", not ".30.00"
-        if get_mc_info("vendor") == "DELL Inc":
+        if normalize_vendor(get_mc_info("vendor")) == "Dell Inc.":
             return (
                 __re_multiline_first(mc_info, regex[prop]).strip()
                 + "."
