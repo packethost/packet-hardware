@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: pip install pylama
+      - run: pip install pylama setuptools
       - run: pylama packethardware setup.py
 
   cli-test:
