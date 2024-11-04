@@ -30,9 +30,7 @@ class Disk(Component):
             "rota": (
                 self.lsblk["rota"]
                 if isinstance(self.lsblk["rota"], str)
-                else "1"
-                if self.lsblk["rota"]
-                else "0"
+                else "1" if self.lsblk["rota"] else "0"
             ),
             "tool": self.lsblk["tool"],
         }
@@ -43,9 +41,7 @@ class Disk(Component):
                 c["rota"] = (
                     c["rota"]
                     if isinstance(c["rota"], str)
-                    else "1"
-                    if c["rota"]
-                    else "0"
+                    else "1" if c["rota"] else "0"
                 )
                 c["size"] = str(c["size"])
 
