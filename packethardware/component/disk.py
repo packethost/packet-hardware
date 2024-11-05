@@ -34,6 +34,16 @@ class Disk(Component):
             ),
             "tool": self.lsblk["tool"],
         }
+        self.lsblk["rota"] = self.data["rota"]
+        self.lsblk["size"] = self.data["size"]
+        if "children" in self.lsblk:
+            for c in self.lsblk["children"]:
+                c["rota"] = (
+                    c["rota"]
+                    if isinstance(c["rota"], str)
+                    else "1" if c["rota"] else "0"
+                )
+                c["size"] = str(c["size"])
 
         if self.__is_nvme():
             self.data["smart"] = utils.get_nvme_attributes(self.lsblk["name"])
