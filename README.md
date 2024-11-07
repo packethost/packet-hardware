@@ -41,6 +41,7 @@ pip install git+https://github.com/packethost/packet-hardware.git@master
 
 Install required tools:
 - Alpine: `apk add dmidecode ipmitool smartmontools hdparm ethtool`
+- Redhat: `yum install dmidecode ipmitool smartmontools hdparm ethtool`
 
 
 ## Running inventory (docker)
