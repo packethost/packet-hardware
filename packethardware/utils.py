@@ -541,7 +541,7 @@ def get_mc_info(prop):
             return (
                 __re_multiline_first(mc_info, regex[prop]).strip()
                 + "."
-                + str(int(get_mc_info("aux")[10:14], 16))
+                + "{:02d}".format(int(get_mc_info("aux")[10:14], 16))
             )
 
         # firmware_version provides X.Y, aux 1st byte provides .Z
