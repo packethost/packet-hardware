@@ -536,11 +536,12 @@ def get_mc_info(prop):
         # Dell version encoding
         # Their version is A.B.C.D, but we only report A.B.C as D is always 0
         # aux: "0x00 0x1e 0x1e 0x00" -> ".30", not ".30.00"
+        # also "0x00 0x05 0x00 0xab" should be seen as ".00.171" -> ".00"
         if normalize_vendor(get_mc_info("vendor")) == "Dell Inc.":
             return (
                 __re_multiline_first(mc_info, regex[prop]).strip()
                 + "."
-                + str(int(get_mc_info("aux")[5:9], 16))
+                + str(int(get_mc_info("aux")[10:14], 16))
             )
 
         # firmware_version provides X.Y, aux 1st byte provides .Z
