@@ -32,6 +32,18 @@ Reference the Dockerfile for other dependency requirements.
 pip3 install git+https://github.com/packethost/packet-hardware.git@master
 ```
 
+if it fails, you may need to use a venv:
+```
+python3 -m venv phenv
+. phenv/bin/activate
+pip install git+https://github.com/packethost/packet-hardware.git@master
+```
+
+Install required tools:
+- Alpine: `apk add dmidecode ipmitool smartmontools hdparm ethtool`
+- Redhat: `yum install dmidecode ipmitool smartmontools hdparm ethtool`
+
+
 ## Running inventory (docker)
 
 The below command will run the script without posting the results.
